@@ -14,6 +14,13 @@ server.use(compression());
 server.use(logger('dev'));
 server.use(helmet());
 
+server.get('/', (req, res) =>
+  res.status(200).json({
+    status: 200,
+    message: 'Welcome to the server that other servers look up to.',
+  }),
+);
+
 server.use('/api/accounts', accountRouter);
 server.use(accountMiddleware.badUrl);
 
