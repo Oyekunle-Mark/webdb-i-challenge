@@ -23,9 +23,16 @@ function remove(id) {
     .del();
 }
 
+function modifiedGet({ limit, sortBy }) {
+  return db('accounts')
+    .limit(limit)
+    .orderBy(sortBy);
+}
+
 module.exports = {
   get,
   insert,
   update,
   remove,
+  modifiedGet,
 };

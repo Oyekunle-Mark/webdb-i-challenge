@@ -1,6 +1,17 @@
 const Accounts = require('../data/accountModel');
 
 const getAllAccounts = (req, res) => {
+  const { limit, sortBy } = req.query;
+
+  if (limit && sortBy) {
+    return Accounts.modifiedGet({ limit, sortBy }).then(accounts =>
+      res.status(200).json({
+        status: 200,
+        data: accounts,
+      }),
+    );
+  }
+
   Accounts.get()
     .then(accounts =>
       res.status(200).json({
@@ -8,10 +19,12 @@ const getAllAccounts = (req, res) => {
         data: accounts,
       }),
     )
-    .catch(() => res.status(500).json({
-      status: 500,
-      message: 'Error getting accounts.',
-    }));
+    .catch(() =>
+      res.status(500).json({
+        status: 500,
+        message: 'Error getting accounts.',
+      }),
+    );
 };
 
 const getAccountById = (req, res) => {
@@ -24,10 +37,12 @@ const getAccountById = (req, res) => {
         data: account,
       }),
     )
-    .catch(() => res.status(500).json({
-      status: 500,
-      message: 'Error getting account.',
-    }));
+    .catch(() =>
+      res.status(500).json({
+        status: 500,
+        message: 'Error getting account.',
+      }),
+    );
 };
 
 const createAccount = (req, res) => {
@@ -44,10 +59,12 @@ const createAccount = (req, res) => {
         },
       }),
     )
-    .catch(() => res.status(500).json({
-      status: 500,
-      message: 'Error creating accounts',
-    }));
+    .catch(() =>
+      res.status(500).json({
+        status: 500,
+        message: 'Error creating accounts',
+      }),
+    );
 };
 
 const updateAccount = (req, res) => {
@@ -60,10 +77,12 @@ const updateAccount = (req, res) => {
         data: account,
       }),
     )
-    .catch(() => res.status(500).json({
-      status: 500,
-      message: 'Error updating account.',
-    }));
+    .catch(() =>
+      res.status(500).json({
+        status: 500,
+        message: 'Error updating account.',
+      }),
+    );
 };
 
 const deleteAccount = (req, res) => {
@@ -73,10 +92,12 @@ const deleteAccount = (req, res) => {
     .then(account =>
       res.status(200).json({ message: `${account} account deleted.` }),
     )
-    .catch(() => res.status(500).json({
-      status: 500,
-      message: 'Error deleting account.',
-    }));
+    .catch(() =>
+      res.status(500).json({
+        status: 500,
+        message: 'Error deleting account.',
+      }),
+    );
 };
 
 module.exports = {
